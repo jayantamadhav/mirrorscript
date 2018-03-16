@@ -45,8 +45,7 @@ mirrors = {
 'http://archive-8.kali.org/kali' : 0 ,
 'http://mirror.pwnieexpress.com/kali' : 0 ,
 'http://archive-7.kali.org/kali' : 0 ,
-'http://mirrors.ocf.berkeley.edu/kali' : 0,
-'http://mirrors.xyz.abc.edu/kali' : 0
+'http://mirrors.ocf.berkeley.edu/kali' : 0
 }
 
 #help menu
