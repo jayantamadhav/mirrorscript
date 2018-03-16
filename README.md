@@ -2,7 +2,7 @@
 Script to change kali repository mirror
 
 # Requirements
-Kali Linux,\n
+Kali Linux,
 Python2.7 (comes pre-bundled)
 
 
