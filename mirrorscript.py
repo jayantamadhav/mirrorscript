@@ -15,7 +15,7 @@ print " /     \|  \_  __ \_  __ \/  _ \_  __ \_____  \_/ ___\_  __ \  \____ \   
 print "|  Y Y  \  ||  | \/|  | \(  <_> )  | \/        \  \___|  | \/  |  |_> >  |  "
 print "|__|_|  /__||__|   |__|   \____/|__| /_______  /\___  >__|  |__|   __/|__|  "
 print "      \/                                     \/     \/         |__|         "
-print "                                                                     -v1.0.3"
+print "                                                                     -v1.0.5"
 print ""
 print ""
 
@@ -45,8 +45,7 @@ mirrors = {
 'http://archive-8.kali.org/kali' : 0 ,
 'http://mirror.pwnieexpress.com/kali' : 0 ,
 'http://archive-7.kali.org/kali' : 0 ,
-'http://mirrors.ocf.berkeley.edu/kali' : 0,
-'http://mirrors.xyz.abc.edu/kali' : 0
+'http://mirrors.ocf.berkeley.edu/kali' : 'Request Times Out'
 }
 
 #help menu
@@ -97,13 +96,15 @@ def update(mirror):
     print "     Done"
     print "     run apt-get update for the changes to load.\n\n"
 def rankDisplay():
-    print ""
-    print ("    MIRRORS" + '\t' + "LATENCY").expandtabs(60)
+    print "+-----------------------------------------------------+---------------------------------------------+"
+    print ("|    MIRRORS" + '\t' + "    |    LATENCY                                  |").expandtabs(50)
+    print "+-----------------------------------------------------+---------------------------------------------+"
     for k, v in sorted(mirrors.items(), key=itemgetter(1)):
         if v[0] == 'R':
-            print ("    "+ k + '\t' + v).expandtabs(60)
+            print ("|    "+ k + '\t' + "    |    " + v + "\t|").expandtabs(50)
         else:
-            print ("    "+ k + '\t' + str(v) + "ms").expandtabs(60) 
+            print ("|    "+ k + '\t' + "    |    " + str(v) + "ms\t|" ).expandtabs(50)
+    print "+-----------------------------------------------------+---------------------------------------------+"
     print ""
     print "* -> You can try ranking the mirrors again, if Request Times Out"
 
@@ -137,12 +138,13 @@ def rank():
 def showMirror():
     i = 1
     print ""
-    print "     MIRRORS"
-    print ""
+    print "     +------------------------------------------------------+"
+    print "     |                       MIRRORS                        |"
+    print "     +------------------------------------------------------+"
     for mirror in mirrors:
-        print "    ", mirror
+        print ("     | " + mirror + "\t" + "|").expandtabs(30)
         i += 1
-    print ""
+    print "     +------------------------------------------------------+"
 
 def helpMenu():
     print ""
