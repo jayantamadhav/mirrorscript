@@ -3,7 +3,7 @@ Script to change kali repository mirror
 
 http://http.kali.org redirects you to the closest available mirror based on your physical location.
 Most of the time the servers may experience heavy load, thus slowing down upgrades even with fast connection.
-This script lets you rank and choose alternative mirrors and override it.
+This script lets you rank(based on the server's ping) and choose an alternative mirror and override it.
 
 # Requirements
 Kali Linux,
