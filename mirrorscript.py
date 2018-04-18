@@ -45,7 +45,7 @@ mirrors = {
 'http://archive-8.kali.org/kali' : 0 ,
 'http://mirror.pwnieexpress.com/kali' : 0 ,
 'http://archive-7.kali.org/kali' : 0 ,
-'http://mirrors.ocf.berkeley.edu/kali' : 'Request Times Out'
+'http://mirrors.ocf.berkeley.edu/kali' : '0'
 }
 
 #help menu
@@ -106,7 +106,7 @@ def rankDisplay():
             print ("|    "+ k + '\t' + "    |    " + str(v) + "ms\t|" ).expandtabs(50)
     print "+-----------------------------------------------------+---------------------------------------------+"
     print ""
-    print "* -> You can try ranking the mirrors again, if Request Times Out"
+    print "* -> You can try ranking the mirrors again, if Request Timed Out"
 
 
 def rank():
