@@ -7,6 +7,8 @@ import time
 from operator import itemgetter
 from shutil import copyfile
 
+import threading
+
 #Banner
 print ""
 print "        .__                            _________            .__        __   "
@@ -15,7 +17,7 @@ print " /     \|  \_  __ \_  __ \/  _ \_  __ \_____  \_/ ___\_  __ \  \____ \   
 print "|  Y Y  \  ||  | \/|  | \(  <_> )  | \/        \  \___|  | \/  |  |_> >  |  "
 print "|__|_|  /__||__|   |__|   \____/|__| /_______  /\___  >__|  |__|   __/|__|  "
 print "      \/                                     \/     \/         |__|         "
-print "                                                                     -v1.0.5"
+print "                                                                     -v2.0.0"
 print ""
 print ""
 
@@ -112,27 +114,38 @@ def rankDisplay():
 def rank():
     print "    Please wait, indexing mirrors according to their latency..."
     i = 0
+    threads = []
     for mirror in mirrors:
-        try:
-            temp = []
-            avg = 0
-            pattern = re.search(r'(//)((?:\\.|[^/\\])*)/', mirror, re.I)
-            url = pattern.group(2)
-            temp.append([line.rpartition('=')[-1] for line in subprocess.check_output(['ping', '-c', '3', url]).splitlines()[1:-4]])
-            for j in range(len(temp[0])):
-                avg += float(temp[0][j][:-3])
-            avg = avg/len(temp[0])
-            mirrors[mirror] = '{0:.1f}'.format(avg)
-            sys.stdout.write("    Number of mirrors scanned : {0}\r".format(i+1))
-            sys.stdout.flush()
-        except subprocess.CalledProcessError:
-            mirrors[mirror] = "Request Timed Out*"
-            sys.stdout.write("    Number of mirrors scanned : {0}\r".format(i+1))
-            sys.stdout.flush()
+        threads.append(threading.Thread(target=rank_thread, args=(i, mirror,)))
+        threads[i].start()
+        i += 1
+
+    i = 0
+    for mirror in mirrors:
+        threads[i].join()
         i += 1
 
     print "\n    Done"
     rankDisplay()
+
+def rank_thread(i, mirror):
+    try:
+        temp = []
+        avg = 0
+        pattern = re.search(r'(//)((?:\\.|[^/\\])*)/', mirror, re.I)
+        url = pattern.group(2)
+        temp.append([line.rpartition('=')[-1] for line in subprocess.check_output(['ping', '-c', '3', url]).splitlines()[1:-4]])
+        for j in range(len(temp[0])):
+            avg += float(temp[0][j][:-3])
+        avg = avg/len(temp[0])
+        mirrors[mirror] = '{0:.1f}'.format(avg)
+        sys.stdout.write("    Thead scanning : {0}\r".format(i+1))
+        sys.stdout.flush()
+    except subprocess.CalledProcessError:
+        mirrors[mirror] = "Request Timed Out*"
+        sys.stdout.write("    Thead scanning : {0}\r".format(i+1))
+        sys.stdout.flush()
+
 
 
 def showMirror():
